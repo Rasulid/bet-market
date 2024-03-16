@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    container_name: bet-db
+    ports:
+      - 5432
+    env_file:
+      - ".env-non-dev"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bet-market
+    ports:
+      - "1212:8000"
+    depends_on:
+      - db
+
+
+volumes:
+  db_data:
+    name: db_data
+  redis_data:
+    name: redis_data
